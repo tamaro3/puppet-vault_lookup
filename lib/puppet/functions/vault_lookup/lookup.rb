@@ -2,6 +2,7 @@ Puppet::Functions.create_function(:'vault_lookup::lookup') do
   dispatch :lookup do
     param 'String', :path
     optional_param 'String', :vault_url
+    param 'String', :field
   end
 
   def lookup(path, vault_url = nil)
@@ -30,7 +31,7 @@ Puppet::Functions.create_function(:'vault_lookup::lookup') do
     end
 
     begin
-      data = JSON.parse(secret_response.body)['data']
+      data = JSON.parse(secret_response.body)['data']['data'][field]
     rescue StandardError
       raise Puppet::Error, 'Error parsing json secret data from vault response'
     end
