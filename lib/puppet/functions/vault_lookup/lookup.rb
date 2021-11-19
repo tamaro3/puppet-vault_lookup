@@ -1,8 +1,8 @@
 Puppet::Functions.create_function(:'vault_lookup::lookup') do
   dispatch :lookup do
     param 'String', :path
-    optional_param 'String', :vault_url
     param 'String', :field
+    optional_param 'String', :vault_url
   end
 
   def lookup(path, vault_url = nil)
