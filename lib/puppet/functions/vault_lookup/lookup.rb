@@ -31,13 +31,12 @@ Puppet::Functions.create_function(:'vault_lookup::lookup') do
     end
 
     begin
-      data = JSON.parse(secret_response.body)['data']['data'][field]
-      data_s = JSON.pretty_generate(data)
+      data = JSON.parse(secret_response.body)['data']['data'][field].to_s
     rescue StandardError
       raise Puppet::Error, 'Error parsing json secret data from vault response'
     end
 
-    Puppet::Pops::Types::PSensitiveType::Sensitive.new(data_s)
+    Puppet::Pops::Types::PSensitiveType::Sensitive.new(data)
   end
 
   private
