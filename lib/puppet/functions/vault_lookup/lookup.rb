@@ -32,6 +32,7 @@ Puppet::Functions.create_function(:'vault_lookup::lookup') do
 
     begin
       data = JSON.parse(secret_response.body)['data']['data'][field].to_s
+      puts "data is #{data.class}"
     rescue StandardError
       raise Puppet::Error, 'Error parsing json secret data from vault response'
     end
